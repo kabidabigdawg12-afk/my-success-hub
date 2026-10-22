@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Success Hub</title>
+<style>
+:root{--bg:#f5f4f0;--card:#fff;--ink:#242424;--muted:#6d6b66;--accent:#455d52;--line:#e5e2db;--soft:#edf1ed}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+header{background:var(--accent);color:white;padding:28px 18px 24px}header,.wrap{max-width:1050px;margin:auto}header p{max-width:680px;color:#e6ebe7;margin:8px 0 0}
+h1{font-size:clamp(1.8rem,4vw,2.5rem);margin:0}h2{font-size:1.25rem;margin:0 0 12px}h3{font-size:1rem;margin:16px 0 6px}
+.wrap{padding:18px}.notice{background:#fff7df;border:1px solid #eee0b6;border-radius:12px;padding:12px 14px;margin-bottom:16px}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.nav a{display:inline-block;border:1px solid var(--line);background:white;border-radius:999px;padding:9px 14px;cursor:pointer;color:var(--ink);text-decoration:none}.nav a:focus,.nav a:hover{background:var(--accent);color:white;border-color:var(--accent)}
+.panel{display:block;scroll-margin-top:12px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px;box-shadow:0 2px 8px #00000005}
+.muted{color:var(--muted);font-size:.93rem}.check{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #f0eee9}.check:last-child{border-bottom:0}.check input{margin-top:5px;accent-color:var(--accent);width:17px;height:17px;flex-shrink:0}
+input[type=text],input[type=number],input[type=date],select,textarea{font:inherit;width:100%;border:1px solid #d9d6ce;border-radius:9px;padding:9px;background:white;color:var(--ink)}textarea{min-height:86px;resize:vertical}
+label.field{display:block;font-size:.9rem;color:var(--muted);margin:10px 0 5px}
+button.action{border:0;border-radius:10px;background:var(--accent);color:white;padding:10px 14px;font:inherit;cursor:pointer;margin:8px 6px 0 0}button.secondary{background:#ecebe5;color:var(--ink)}
+.progress{height:9px;background:#e8e6df;border-radius:99px;overflow:hidden;margin:8px 0 4px}.bar{height:100%;width:0;background:var(--accent);transition:width .2s}
+.stat{font-size:1.8rem;font-weight:700}.small{font-size:.85rem}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+details{border-top:1px solid var(--line);padding:10px 0}summary{cursor:pointer;font-weight:650}
+@media(max-width:560px){.two{grid-template-columns:1fr}.wrap{padding:12px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>My Success Hub</h1>
+  <p>One calm place for my routine, school, learning, club idea, service hours, and biomedical engineering exploration. Small steps count. I do not have to do everything every day.</p>
+</header>
+<div class="wrap">
+  <div class="notice"><strong>Rule for this plan:</strong> consistency over intensity. A 10-minute step counts. Rest is part of the plan, not a failure.</div>
+  <nav class="nav" aria-label="Sections">
+    <a href="#today">Today</a><a href="#roadmap">14 days + 90 days</a><a href="#learn">Learning log</a><a href="#club">Club planner</a><a href="#service">Service hours</a><a href="#review">Weekly review</a>
+  </nav>
+
+  <section id="today" class="panel active">
+    <div class="grid">
+      <div class="card">
+        <h2>My 60-minute after-school block</h2><p class="muted">Flexible order is okay. If you're exhausted, do the tiny version.</p>
+        <div id="routineChecks">
+          <label class="check"><input type="checkbox" data-save="routine-reset"><span><strong>5 min — Reset</strong><br><span class="muted">Water, snack, breathe, clear a small space.</span></span></label>
+          <label class="check"><input type="checkbox" data-save="routine-school"><span><strong>20 min — School first</strong><br><span class="muted">One assignment or one focused study session.</span></span></label>
+          <label class="check"><input type="checkbox" data-save="routine-growth"><span><strong>20 min — One growth goal</strong><br><span class="muted">Pick just one topic from the Learning Log.</span></span></label>
+          <label class="check"><input type="checkbox" data-save="routine-prep"><span><strong>10 min — Prepare tomorrow</strong><br><span class="muted">Bag, clothes, calendar, top priority.</span></span></label>
+          <label class="check"><input type="checkbox" data-save="routine-reflect"><span><strong>5 min — Check in</strong><br><span class="muted">What went okay? What is one next step?</span></span></label>
+        </div>
+        <div class="progress"><div class="bar" id="routineBar"></div></div><div class="muted" id="routineCount">0 of 5 complete</div>
+        <button class="action secondary" id="resetToday">Reset today's checklist</button>
+      </div>
+      <div class="card">
+        <h2>Today's focus</h2>
+        <label class="field" for="todayDate">Date</label><input type="date" id="todayDate" data-save="today-date">
+        <label class="field" for="topTask">My one most important task</label><input id="topTask" type="text" data-save="top-task" placeholder="One realistic thing">
+        <label class="field" for="tinyStep">The smallest first step</label><input id="tinyStep" type="text" data-save="tiny-step" placeholder="Something I can do in 5–10 minutes">
+        <label class="field" for="energy">My energy today</label><select id="energy" data-save="energy"><option value="">Choose one</option><option>Low — do the minimum</option><option>Medium — one focused block</option><option>High — optional extra</option></select>
+        <label class="check"><input type="checkbox" data-save="phone-away"><span>Phone parked away from bed while winding down</span></label>
+        <label class="check"><input type="checkbox" data-save="sleep-winddown"><span>Started a calm wind-down routine</span></label>
+      </div>
+    </div>
+    <div class="card"><h2>When I feel behind</h2><p>Pause and choose one: <strong>do one tiny task, ask for help, or rest.</strong> My future is built over time. One quiet day cannot erase my potential.</p></div>
+  </section>
+
+  <section id="roadmap" class="panel">
+    <div class="card"><h2>14-day starter plan</h2><p class="muted">Check off the steps as you go. Skipping a day doesn't mean starting over.</p><div id="missions"></div><div class="progress"><div class="bar" id="missionBar"></div></div><div class="muted" id="missionCount"></div></div>
+    <div class="grid">
+      <div class="card"><h2>90-day roadmap</h2>
+        <details open><summary>Days 1–14 · Set the base</summary><p>Build a manageable routine, prepare for school, and try short sessions across your interests.</p><label class="check"><input type="checkbox" data-save="phase1"><span>Focus on consistency, not perfection.</span></label></details>
+        <details><summary>Days 15–30 · Explore</summary><p>Try beginner finance lessons, follow a reliable world-news source, explore biomedical engineering, and ask what club students need.</p><label class="check"><input type="checkbox" data-save="phase2"><span>Complete a few low-pressure exploration sessions.</span></label></details>
+        <details><summary>Days 31–60 · Build</summary><p>Choose one small project: a club proposal, a finance glossary, a science explainer, or a service-hours tracker.</p><label class="check"><input type="checkbox" data-save="phase3"><span>Make one tangible draft or project.</span></label></details>
+        <details><summary>Days 61–90 · Review and refine</summary><p>Review what you enjoyed, what helped, and what realistically fits your school life. Pick the next step.</p><label class="check"><input type="checkbox" data-save="phase4"><span>Write a short 90-day reflection.</span></label></details>
+      </div>
+      <div class="card"><h2>Weekly rotation</h2>
+        <div class="check"><span><strong>Monday</strong> — World events (15–20 min)</span></div><div class="check"><span><strong>Tuesday</strong> — Finance basics (15–20 min)</span></div><div class="check"><span><strong>Wednesday</strong> — Biomedical engineering (15–20 min)</span></div><div class="check"><span><strong>Thursday</strong> — Club idea (15–20 min)</span></div><div class="check"><span><strong>Friday</strong> — Community service / hour log (15–20 min)</span></div><div class="check"><span><strong>Weekend</strong> — Catch up or rest; 10-minute review</span></div>
+        <p class="muted">This is a menu, not a contract. Choose fewer topics during busy school weeks.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="learn" class="panel">
+    <div class="grid">
+      <div class="card"><h2>World events</h2><p class="muted">Goal: understand context, not keep up with every headline.</p><label class="field">Topic / event</label><input data-save="news-topic" type="text" placeholder="What happened?"><label class="field">What happened? (in my own words)</label><textarea data-save="news-summary" placeholder="2–4 sentences"></textarea><label class="field">Why does it matter, and what do I still wonder?</label><textarea data-save="news-question"></textarea></div>
+      <div class="card"><h2>Finance basics</h2><p class="muted">Start with concepts; no need to invest money.</p><label class="field">Concept I'm learning</label><input data-save="finance-topic" type="text" placeholder="Budget, interest, saving, credit…"><label class="field">Explain it simply</label><textarea data-save="finance-notes"></textarea><label class="field">One example or question</label><textarea data-save="finance-question"></textarea></div>
+      <div class="card"><h2>Biomedical engineering</h2><p class="muted">Explore how engineering and biology work together to improve health.</p><label class="field">Topic I'm curious about</label><input data-save="biomed-topic" type="text" placeholder="Prosthetics, imaging, biomaterials…"><label class="field">What I learned</label><textarea data-save="biomed-notes"></textarea><label class="field">Possible next step</label><input data-save="biomed-next" type="text" placeholder="Watch a lecture, read an article, ask a teacher…"></div>
+    </div>
+    <div class="card"><h2>Useful research habits</h2><ul><li>Write down the source and date.</li><li>Compare two trustworthy sources for major claims.</li><li>Separate facts from opinions and predictions.</li><li>Save questions you want to return to rather than researching endlessly.</li></ul></div>
+  </section>
+
+  <section id="club" class="panel">
+    <div class="card"><h2>Club idea builder</h2><p class="muted">You don't need to launch a club immediately. First learn whether there's interest and what your school requires.</p>
+      <label class="field">Working name</label><input data-save="club-name" type="text" placeholder="A name can come later">
+      <label class="field">Purpose — what would the club help people do?</label><textarea data-save="club-purpose"></textarea>
+      <label class="field">Who might be interested?</label><input data-save="club-audience" type="text" placeholder="Students who enjoy…">
+      <label class="field">Three possible activities</label><textarea data-save="club-activities" placeholder="1. …&#10;2. …&#10;3. …"></textarea>
+      <label class="field">Teacher/staff member I could ask</label><input data-save="club-advisor" type="text">
+      <h3>Next steps</h3>
+      <label class="check"><input type="checkbox" data-save="club-check-rules"><span>Find the school's club rules, deadlines, and approval process.</span></label>
+      <label class="check"><input type="checkbox" data-save="club-check-advisor"><span>Ask a teacher or staff member about advising.</span></label>
+      <label class="check"><input type="checkbox" data-save="club-check-interest"><span>Ask a few students what they'd want from the club.</span></label>
+      <label class="check"><input type="checkbox" data-save="club-check-proposal"><span>Draft a short proposal with purpose, activities, and meeting idea.</span></label>
+    </div>
+  </section>
+
+  <section id="service" class="panel">
+    <div class="card"><h2>Community service hours tracker</h2><p class="muted">Check your school's exact requirements before counting hours. Some programs require pre-approval, specific organizations, or signed verification.</p>
+      <div class="two"><div><label class="field">Organization / activity</label><input id="serviceOrg" type="text" placeholder="e.g. approved food pantry"></div><div><label class="field">Date</label><input id="serviceDate" type="date"></div><div><label class="field">Hours completed</label><input id="serviceHours" type="number" min="0" step="0.25" placeholder="e.g. 2"></div><div><label class="field">Verification status</label><select id="serviceStatus"><option>Need to confirm</option><option>Approved / verified</option><option>Waiting for signature</option></select></div></div>
+      <label class="field">Notes / supervisor contact (avoid private sensitive info)</label><textarea id="serviceNotes" placeholder="What did you do? Who needs to sign?"></textarea>
+      <button class="action" id="addService">Add service entry</button>
+      <h3>My log</h3><div class="stat" id="hoursTotal">0 hours</div><div id="serviceList" class="muted">No entries yet.</div>
+      <button class="action secondary" id="exportService">Export service log as CSV</button>
+      <h3>Questions to ask school</h3><label class="check"><input type="checkbox" data-save="svc-q-required"><span>How many hours are required, and by what deadline?</span></label><label class="check"><input type="checkbox" data-save="svc-q-approved"><span>Which organizations and activities count?</span></label><label class="check"><input type="checkbox" data-save="svc-q-proof"><span>What proof/signature is required?</span></label><label class="check"><input type="checkbox" data-save="svc-q-submit"><span>Where and how do I submit the hours?</span></label>
+    </div>
+  </section>
+
+  <section id="review" class="panel">
+    <div class="card"><h2>Weekly review</h2><p class="muted">Keep it short. This is for learning, not judging yourself.</p>
+      <label class="field">One thing I'm glad I did</label><textarea data-save="review-win"></textarea>
+      <label class="field">What felt too heavy or unrealistic?</label><textarea data-save="review-heavy"></textarea>
+      <label class="field">What can I simplify next week?</label><textarea data-save="review-simplify"></textarea>
+      <label class="field">One priority for next week</label><input data-save="review-priority" type="text">
+      <label class="field">One thing I'll do for rest/fun</label><input data-save="review-rest" type="text">
+      <button class="action" id="saveReview">Save review</button><span id="reviewSaved" class="muted" aria-live="polite"></span>
+    </div>
+    <div class="card"><h2>Data and backup</h2><p class="muted">This dashboard saves your entries in this browser on this device. It does not automatically sync to Google Docs or another device. Export a backup occasionally.</p><button class="action" id="exportBackup">Export all saved data (JSON)</button><label class="field">Restore a backup JSON file</label><input type="file" id="importBackup" accept=".json,application/json"><button class="action secondary" id="clearData">Clear saved data</button><p class="small muted">Clearing data cannot be undone unless you have a backup.</p></div>
+  </section>
+  <footer class="muted small" style="padding:8px 4px 24px">Made to be flexible. If a day is hard, do the tiny version or rest. Your plan should support your life, not take it over.</footer>
+</div>
+<script>
+const KEY='mySuccessHub.v1';
+let state={}; try{state=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){state={}}
+const save=()=>localStorage.setItem(KEY,JSON.stringify(state));
+function applySaved(){document.querySelectorAll('[data-save]').forEach(el=>{let k=el.dataset.save;if(state[k]!==undefined){if(el.type==='checkbox')el.checked=!!state[k];else el.value=state[k]}});updateRoutine();updateMissions();renderServices()}
+document.querySelectorAll('[data-save]').forEach(el=>el.addEventListener('change',()=>{state[el.dataset.save]=el.type==='checkbox'?el.checked:el.value;save();updateRoutine();updateMissions()}));
+const missions=[
+'Set up this dashboard and choose one priority.',
+'Try the 60-minute routine once; adjust what doesn't fit.',
+'Choose one finance concept and explain it in your own words.',
+'Read one world-event explainer and write down a question.',
+'Explore one biomedical engineering area that interests you.',
+'Find where your school lists club rules or ask a staff member.',
+'Check community-service requirements and how hours are verified.',
+'Do a short weekly review; name one thing that went well.',
+'Repeat the routine with one small improvement.',
+'Learn one new finance term (saving, interest, budget, or credit).',
+'Compare two sources about one news story.',
+'Write three ideas for a possible club meeting.',
+'Find one beginner resource about a biomedical engineering topic.',
+'Review the last two weeks and choose what to continue, pause, or change.'
+];
+function updateMissions(){const host=document.getElementById('missions');if(!host.dataset.built){host.innerHTML=missions.map((m,i)=>`<label class="check"><input type="checkbox" data-mission="${i}"><span><strong>Day ${i+1}:</strong> ${m}</span></label>`).join('');host.dataset.built='1';host.querySelectorAll('[data-mission]').forEach(el=>el.addEventListener('change',()=>{state['mission-'+el.dataset.mission]=el.checked;save();updateMissions()}))}
+let boxes=[...host.querySelectorAll('[data-mission]')];boxes.forEach(el=>el.checked=!!state['mission-'+el.dataset.mission]);let n=boxes.filter(x=>x.checked).length;document.getElementById('missionBar').style.width=(n/14*100)+'%';document.getElementById('missionCount').textContent=`${n} of 14 starter steps complete — go at your own pace.`}
+function updateRoutine(){let boxes=[...document.querySelectorAll('#routineChecks input')],n=boxes.filter(x=>x.checked).length;document.getElementById('routineBar').style.width=(n/5*100)+'%';document.getElementById('routineCount').textContent=`${n} of 5 complete`; }
+document.getElementById('resetToday').addEventListener('click',()=>{if(!confirm("Reset only today's routine and wind-down checkboxes?"))return;document.querySelectorAll('#routineChecks input,[data-save="phone-away"],[data-save="sleep-winddown"]').forEach(el=>{el.checked=false;delete state[el.dataset.save]});save();updateRoutine()});
+let services=Array.isArray(state.services)?state.services:[];
+function renderServices(){services=Array.isArray(state.services)?state.services:[];document.getElementById('hoursTotal').textContent=services.reduce((a,x)=>a+(Number(x.hours)||0),0).toLocaleString(undefined,{maximumFractionDigits:2})+' hours';let host=document.getElementById('serviceList');host.innerHTML=services.length?services.map((x,i)=>`<div class="card"><strong>${escapeHtml(x.org||'Activity')}</strong> · ${escapeHtml(x.date||'No date')}<br>${Number(x.hours)||0} hour(s) · ${escapeHtml(x.status||'Need to confirm')}<br><span class="muted">${escapeHtml(x.notes||'')}</span><br><button class="action secondary" data-delete-service="${i}">Delete entry</button></div>`).join(''):'No entries yet.';host.querySelectorAll('[data-delete-service]').forEach(b=>b.addEventListener('click',()=>{services.splice(Number(b.dataset.deleteService),1);state.services=services;save();renderServices()}))}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+document.getElementById('addService').addEventListener('click',()=>{let hours=Number(document.getElementById('serviceHours').value);if(!Number.isFinite(hours)||hours<=0){alert('Enter a number of hours greater than zero.');return}services.push({org:document.getElementById('serviceOrg').value,date:document.getElementById('serviceDate').value,hours,status:document.getElementById('serviceStatus').value,notes:document.getElementById('serviceNotes').value});state.services=services;save();renderServices();['serviceOrg','serviceDate','serviceHours','serviceNotes'].forEach(id=>document.getElementById(id).value='')});
+document.getElementById('exportService').addEventListener('click',()=>{let rows=[['Organization/activity','Date','Hours','Verification status','Notes'],...services.map(x=>[x.org,x.date,x.hours,x.status,x.notes])];download('community_service_log.csv',rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n'),'text/csv')});
+function download(name,content,type){let blob=new Blob([content],{type}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+document.getElementById('exportBackup').addEventListener('click',()=>download('my_success_hub_backup.json',JSON.stringify(state,null,2),'application/json'));
+document.getElementById('importBackup').addEventListener('change',async e=>{let f=e.target.files[0];if(!f)return;try{let incoming=JSON.parse(await f.text());if(!incoming||typeof incoming!=='object'||Array.isArray(incoming))throw Error();state=incoming;save();location.reload()}catch(err){alert('That file could not be read as a valid dashboard backup.')}});
+document.getElementById('clearData').addEventListener('click',()=>{if(confirm('Clear ALL dashboard entries on this browser? Export a backup first if you want to keep them.')){localStorage.removeItem(KEY);state={};location.reload()}});
+document.getElementById('saveReview').addEventListener('click',()=>{save();document.getElementById('reviewSaved').textContent=' Saved in this browser.';setTimeout(()=>document.getElementById('reviewSaved').textContent='',2500)});
+if(!document.getElementById('todayDate').value)document.getElementById('todayDate').value=new Date().toISOString().slice(0,10);
+applySaved();
+</script>
+</body></html>
